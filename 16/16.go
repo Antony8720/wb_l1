@@ -4,28 +4,36 @@ import (
 	"fmt"
 )
 
-func quickSort(arr []int) []int {
-	l := len(arr)
-	if l < 2 {
-		return arr
-	}
-	less := make([]int, 0)
-	more := make([]int, 0)
-	pivot := arr[0]
-	for _, value := range arr[1:] {
-		if value > pivot{
-			more = append(more, value)
-		} else {
-			less = append(less, value)
-		}
-	}
-	arr = append(quickSort(less), pivot)
-	arr = append(arr, quickSort(more)...)
+func partition(arr []int) int{
+	pivot := arr[len(arr)/2]
 
-	return arr
+	left := 0
+	right := len(arr) - 1
+
+	for{
+	for; arr[left] < pivot; left++{
+	}
+	for; arr[right] > pivot; right--{
+	} 
+
+	if left >= right {
+		return right
+	}
+	arr[left], arr[right] = arr[right], arr[left]
+	}
+}
+
+func quickSort(arr []int) {
+	if len(arr) < 2 {
+		return
+	}
+	split := partition(arr)
+	quickSort(arr[:split])
+	quickSort(arr[split:])
 }
 
 func main() {
 	arr := []int{10, 4, 1, 6, 2, 5, 8, 3, 9, 7, 0}
-	fmt.Println(quickSort(arr))
+	quickSort(arr)
+	fmt.Println(arr)
 }
